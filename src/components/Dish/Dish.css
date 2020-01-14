@@ -1,0 +1,25 @@
+.addToCart {
+  float: right;
+  margin: 40px 5px 40px 0;
+  color: rgb(24, 134, 34);
+  border-radius: 5px;
+}
+
+.Dish_block {
+  margin-bottom: 10px;
+  border: 1px solid grey;
+  width: 500px;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.Dish_info {
+  padding-top: 30px;
+  color: rgb(46, 29, 109);
+}
+
+.Dish_info p{
+  font-weight: bold;
+}
