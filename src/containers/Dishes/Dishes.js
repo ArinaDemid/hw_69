@@ -77,8 +77,8 @@ class Dishes extends Component{
 const mapStateToProps= state => {
   return {
     dishes: state.dishes.dishes,
-    dishCount: state.dishes.dishCount,
-    totalPrice: state.dishes.totalPrice
+    dishCount: state.cart.dishCount,
+    totalPrice: state.cart.totalPrice
   };
 };
 
