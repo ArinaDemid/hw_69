@@ -1,13 +1,13 @@
 import React from "react";
 import './DishStatus.css';
 
-const DishStatus = props => {
+const DishStatus = ({name, count, total, remove}) => {
   return (
     <div className='DishStatus-info'>
-      <p className='DishStatus-name'>{props.name}</p>
-      <p>x {props.count}</p>
-      <p className='DishStatus-priceTotal'> = {props.total} KGS</p>
-      <p className='DishStatus-remove' onClick={props.remove}><i className="DishStatus-icon fas fa-trash-alt"></i></p>
+      <p className='DishStatus-name'>{name}</p>
+      <p>x {count}</p>
+      <p className='DishStatus-priceTotal'> = {total} KGS</p>
+      <p className='DishStatus-remove' onClick={remove}><i className="DishStatus-icon fas fa-trash-alt"></i></p>
     </div>
   )
 };

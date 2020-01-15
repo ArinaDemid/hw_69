@@ -2,56 +2,16 @@ import React, {Component, Fragment} from 'react';
 import './Dishes.css';
 import Dish from '../../components/Dish/Dish';
 import {connect} from "react-redux";
-import {fetchDishes} from '../../store/actions';
+import {fetchDishes, dishesCount, addDish, deleteDish, totalPrice} from '../../store/actions/dishes';
 import TotalPrice from '../../components/TotalPrice/TotalPrice';
 import DishStatus from '../../components/DishStatus/DishStatus';
 
 class Dishes extends Component{
 
-  state = {
-    dishes: [
-      {dish: 'Плов', count: 0},
-      {dish: 'Шакарап', count: 0},
-      {dish: 'Лепешка', count: 0}
-    ],
-    totalPrice: 0
-  };
-
   componentDidMount() {
     this.props.fetchDishes();
+    this.props.dishesCount();
   }
-
-  addDish = (name) => {
-    const dishes = [...this.state.dishes];
-    dishes.forEach(item => {
-      if (item.dish === name) item.count++;
-    });
-
-    let totalPrice = this.state.totalPrice;
-    totalPrice = this.addTotal();
-
-    this.setState({dishes, totalPrice});
-  };
-
-  addTotal = () => {
-    let countPrice = 0;
-    for (let i = 0; i < this.state.dishes.length; i++) {
-      countPrice += this.props.dishes[Object.keys(this.props.dishes)[i]].price * this.state.dishes[i].count;
-    }
-    return countPrice;
-  };
-
-  removeDish = (name) => {
-    const dishes = [...this.state.dishes];
-    dishes.forEach(item => {
-      if (item.dish === name && item.count !== 0) item.count--;
-    });
-
-    let totalPrice = this.state.totalPrice;
-    totalPrice = this.addTotal();
-
-    this.setState({dishes, totalPrice});
-  };
   
   render() {
     const stateDishes = this.props.dishes;
@@ -64,40 +24,47 @@ class Dishes extends Component{
               name={stateDishes[id].name}
               price={stateDishes[id].price}
               image={stateDishes[id].image}
-              add={() => this.addDish(stateDishes[id].name, id)}
+              add={() => this.props.addDish(stateDishes[id].name)}
             />
           </div>
         ))
       );
     }
 
+    const dishesInCart = [];
+
+    for (let i in this.props.dishCount) {
+      dishesInCart.push({type: i, count: this.props.dishCount[i]})
+    }
+
     let dishStatus = null;
-    if (this.state.dishes) {
+    if (this.props.dishCount) {
       dishStatus = (
-        this.state.dishes.map(dish => (
+        dishesInCart.map(dish => (
           dish.count !== 0 ? 
           <DishStatus
-            key={dish.dish}
-            name={dish.dish}
+            key={dish.type}
+            name={dish.type}
             count={dish.count}
-            total={dish.count * this.props.dishes[Object.keys(this.props.dishes)[this.state.dishes.findIndex(p => p.dish === dish.dish)]].price}
-            remove={() => this.removeDish(dish.dish)}
+            total={dish.count * this.props.dishes[Object.keys(this.props.dishes)[dishesInCart.findIndex(p => p.type === dish.type)]].price}
+            remove={() => this.props.deleteDish(dish.type)}
           /> 
           : null
         ))
       );
     }
+    
     return (
       <Fragment>
         <div className='DishesApp'>
           <div className='Dishes'>
             {dishes}
           </div>
-          {(this.state.totalPrice !== 0) ? 
+          {(this.props.totalPrice > 150) ? 
             <div className='OrderBlock'>
               <p style={{fontSize: '18px', fontWeight: '600', textAlign: 'center'}}>Cart</p>
               {dishStatus}
-              <TotalPrice money={this.state.totalPrice}/>
+              <TotalPrice money={this.props.totalPrice}/>
               <button className='placeOrder'>Place Order</button> 
             </div>
             : <p className='OrderEmpty'>Cart is empty!</p>}
@@ -109,16 +76,19 @@ class Dishes extends Component{
 
 const mapStateToProps= state => {
   return {
-    dishes: state.dishes
+    dishes: state.dishes.dishes,
+    dishCount: state.dishes.dishCount,
+    totalPrice: state.dishes.totalPrice
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    // submitTask: (event, taskText) => dispatch(submitTask(event, taskText)),
-    // valueChange: (value) => dispatch(valueChange(value)),
+    addDish: (dishName) => dispatch(addDish(dishName)),
+    deleteDish: (dishName) => dispatch(deleteDish(dishName)),
     fetchDishes: () => dispatch(fetchDishes()),
-    // addDish: (id) => dispatch(addDish())
+    dishesCount: () => dispatch(dishesCount()),
+    totalPriceShow: () => dispatch(totalPrice())
   };
 };
 
