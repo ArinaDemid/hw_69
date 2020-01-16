@@ -8,6 +8,7 @@ import TotalPrice from '../../components/TotalPrice/TotalPrice';
 import DishStatus from '../../components/DishStatus/DishStatus';
 import Modal from '../../components/UI/Modal/Modal';
 import Form from '../../components/Form/Form';
+import Spinner from '../../components/UI/Spinner/Spinner';
 
 class Dishes extends Component{
 
@@ -58,6 +59,7 @@ class Dishes extends Component{
     }
     
     return (
+      !this.props.spinner ? 
       <Fragment>
         <div className='DishesApp'>
           <div className='Dishes'>
@@ -79,6 +81,7 @@ class Dishes extends Component{
             : null
           }
       </Fragment>
+      : <Spinner />
     );
   }
 }
@@ -88,7 +91,8 @@ const mapStateToProps= state => {
     dishes: state.dishes.dishes,
     dishCount: state.cart.dishCount,
     totalPrice: state.cart.totalPrice,
-    loading: state.cart.loading
+    loading: state.cart.loading,
+    spinner: state.dishes.spinner,
   };
 };
 
