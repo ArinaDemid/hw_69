@@ -76,7 +76,7 @@ class Dishes extends Component{
           </div>
           {this.props.showModal ? 
             <Modal show={this.props.loading} close={this.props.closeModal}>
-              <Form ></Form>
+              <Form />
             </Modal> 
             : null
           }
