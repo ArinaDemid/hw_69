@@ -1,0 +1,28 @@
+.ContactData {
+  margin: 20px 5px;
+  width: 80%;
+  text-align: center;
+  box-shadow: 0 2px 3px #ccc;
+  border: 1px solid #eee;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.Input {
+  display: block;
+  margin: 10px 0;
+}
+
+.PostOrder {
+  padding: 10px 20px;
+  background-color: rgb(182, 245, 182);
+  color: rgb(17, 85, 26);
+  border-radius: 5px;
+  outline: none;
+}
+
+@media (min-width: 600px) {
+  .ContactData {
+      width: 500px;
+  }
+}

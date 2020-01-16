@@ -1,4 +1,11 @@
-import {DISHES_COUNT, ADD_DISH, DELETE_DISH, TOTAL_PRICE} from "../actions/actionsType";
+import { DISHES_COUNT, 
+        ADD_DISH, 
+        DELETE_DISH, 
+        TOTAL_PRICE, 
+        ORDER_POST_REQUEST, 
+        ORDER_POST_ERROR, 
+        ORDER_POST_SUCCESS } 
+from "../actions/actionsType";
 
 const INITIAL_DISHES = {
   плов: 0,
@@ -11,6 +18,8 @@ const INITIAL_PRICE = 150;
 const initialState = {
   dishCount: {...INITIAL_DISHES},
   totalPrice: INITIAL_PRICE,
+  loading: false,
+  ordered: false
 };
 
 const DISHES_PRICES = {
@@ -43,6 +52,19 @@ const reducer = (state = initialState, action) => {
       };
     case TOTAL_PRICE:
       return {...state, totalPrice: state.totalPrice};
+    case ORDER_POST_REQUEST:
+      return {...state, loading: true};
+    case ORDER_POST_ERROR:
+      return {
+        ...state,
+        loading: false
+      };
+    case ORDER_POST_SUCCESS:
+      return {
+        ...state, 
+        loading: false, 
+        ordered: true
+      };
     default:
       return state;
   }

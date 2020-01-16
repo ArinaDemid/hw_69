@@ -5,7 +5,8 @@ import { FETCH_DISHES_SUCCESS,
         DISHES_COUNT, 
         ADD_DISH, 
         DELETE_DISH,
-        TOTAL_PRICE } 
+        TOTAL_PRICE
+      } 
 from '../actions/actionsType';
 
 export const fetchDishesSuccess = (dishes) => {
