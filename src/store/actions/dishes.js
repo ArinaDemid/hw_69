@@ -5,7 +5,8 @@ import { FETCH_DISHES_SUCCESS,
         DISHES_COUNT, 
         ADD_DISH, 
         DELETE_DISH,
-        TOTAL_PRICE
+        TOTAL_PRICE,
+        CLEAN_CART
       } 
 from '../actions/actionsType';
 
@@ -35,6 +36,10 @@ export const deleteDish = (dishName) => {
 
 export const totalPrice = () => {
   return { type: TOTAL_PRICE };
+};
+
+export const cleanCart = () => {
+  return { type: CLEAN_CART };
 };
 
 export const fetchDishes = () => {

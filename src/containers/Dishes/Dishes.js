@@ -3,6 +3,7 @@ import './Dishes.css';
 import Dish from '../../components/Dish/Dish';
 import {connect} from "react-redux";
 import {fetchDishes, dishesCount, addDish, deleteDish, totalPrice} from '../../store/actions/dishes';
+import {closeModal, showModal} from '../../store/actions/order';
 import TotalPrice from '../../components/TotalPrice/TotalPrice';
 import DishStatus from '../../components/DishStatus/DishStatus';
 import Modal from '../../components/UI/Modal/Modal';
@@ -10,23 +11,11 @@ import Form from '../../components/Form/Form';
 
 class Dishes extends Component{
 
-  state = {
-    showModal: false,
-  };
-
   componentDidMount() {
     this.props.fetchDishes();
     this.props.dishesCount();
   }
 
-  showModal = () => {
-    this.setState({showModal: true});
-  };
-
-  closeModal = () => {
-    this.setState({showModal: false});
-  };
-  
   render() {
     const stateDishes = this.props.dishes;
     let dishes = null;
@@ -79,12 +68,12 @@ class Dishes extends Component{
               <p style={{fontSize: '18px', fontWeight: '600', textAlign: 'center'}}>Cart</p>
               {dishStatus}
               <TotalPrice money={this.props.totalPrice}/>
-              <button className='placeOrder' onClick={this.showModal}>Place Order</button> 
+              <button className='placeOrder' onClick={this.props.showModal}>Place Order</button> 
             </div>
             : <p className='OrderEmpty'>Cart is empty!</p>}
           </div>
-          {this.state.showModal ? 
-            <Modal show={this.state.showModal} close={this.closeModal}>
+          {this.props.showModal ? 
+            <Modal show={this.props.loading} close={this.props.closeModal}>
               <Form ></Form>
             </Modal> 
             : null
@@ -98,7 +87,8 @@ const mapStateToProps= state => {
   return {
     dishes: state.dishes.dishes,
     dishCount: state.cart.dishCount,
-    totalPrice: state.cart.totalPrice
+    totalPrice: state.cart.totalPrice,
+    loading: state.cart.loading
   };
 };
 
@@ -108,7 +98,9 @@ const mapDispatchToProps = dispatch => {
     deleteDish: (dishName) => dispatch(deleteDish(dishName)),
     fetchDishes: () => dispatch(fetchDishes()),
     dishesCount: () => dispatch(dishesCount()),
-    totalPriceShow: () => dispatch(totalPrice())
+    totalPriceShow: () => dispatch(totalPrice()),
+    showModal: () => dispatch(showModal()),
+    closeModal: () => dispatch(closeModal()),
   };
 };
 

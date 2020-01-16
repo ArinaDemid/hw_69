@@ -8,3 +8,6 @@ export const TOTAL_PRICE = 'TOTAL_PRICE';
 export const ORDER_POST_SUCCESS = 'ORDER_POST_SUCCESS';
 export const ORDER_POST_ERROR = 'ORDER_POST_ERROR';
 export const ORDER_POST_REQUEST = 'ORDER_POST_REQUEST';
+export const CLOSE_MODAL = 'CLOSE_MODAL';
+export const SHOW_MODAL = 'SHOW_MODAL';
+export const CLEAN_CART = 'CLEAN_CART';

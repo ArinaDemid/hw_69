@@ -1,10 +1,8 @@
 import React, {Component} from 'react';
 import './Form.css';
 import {connect} from 'react-redux';
-import {totalPrice, dishesCount} from "../../store/actions/dishes";
+import {totalPrice, dishesCount, cleanCart} from "../../store/actions/dishes";
 import {postOrder} from "../../store/actions/order";
-import {Redirect} from "react-router-dom";
-import { withRouter } from 'react-router';
 
 class Form extends Component {
   state = {
@@ -43,7 +41,8 @@ class Form extends Component {
       }
     };
     await this.props.postOrder(order);
-    // this.props.history.push('/');
+    this.setState({name: '', email: '', street: '', number: ''});
+    this.props.cleanCart();
   };
 
   render() {
@@ -85,10 +84,6 @@ class Form extends Component {
       </form>
     );
 
-    if (this.props.ordered) {
-      form = <Redirect to="/" />;
-    }
-
     return (
       <div className="ContactData">
         <h4>Enter your contact data</h4>
@@ -101,8 +96,7 @@ class Form extends Component {
 const mapStateToProps = state => {
   return {
     dishCount: state.cart.dishCount,
-    totalPrice: state.cart.totalPrice,
-    ordered: state.cart.ordered
+    totalPrice: state.cart.totalPrice
   }
 };
 
@@ -110,7 +104,8 @@ const mapDispatchToProps = dispatch => {
   return {
     dishesCount: () => dispatch(dishesCount()),
     totalPriceShow: () => dispatch(totalPrice()),
-    postOrder: (order) => dispatch(postOrder(order))
+    postOrder: (order) => dispatch(postOrder(order)),
+    cleanCart: () => dispatch(cleanCart())
   }
 };
 

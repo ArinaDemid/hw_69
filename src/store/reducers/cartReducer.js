@@ -4,7 +4,10 @@ import { DISHES_COUNT,
         TOTAL_PRICE, 
         ORDER_POST_REQUEST, 
         ORDER_POST_ERROR, 
-        ORDER_POST_SUCCESS } 
+        ORDER_POST_SUCCESS,
+        SHOW_MODAL,
+        CLOSE_MODAL,
+        CLEAN_CART } 
 from "../actions/actionsType";
 
 const INITIAL_DISHES = {
@@ -18,8 +21,7 @@ const INITIAL_PRICE = 150;
 const initialState = {
   dishCount: {...INITIAL_DISHES},
   totalPrice: INITIAL_PRICE,
-  loading: false,
-  ordered: false
+  loading: false
 };
 
 const DISHES_PRICES = {
@@ -62,8 +64,23 @@ const reducer = (state = initialState, action) => {
     case ORDER_POST_SUCCESS:
       return {
         ...state, 
-        loading: false, 
-        ordered: true
+        loading: false
+      };
+    case SHOW_MODAL:
+      return {
+        ...state, 
+        loading: true
+      };
+    case CLOSE_MODAL:
+      return {
+        ...state, 
+        loading: false
+      };
+    case CLEAN_CART:
+      return {
+        ...state, 
+        totalPrice: INITIAL_PRICE,
+        dishCount: {...INITIAL_DISHES}
       };
     default:
       return state;
